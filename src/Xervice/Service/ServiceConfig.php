@@ -6,7 +6,7 @@ namespace Xervice\Service;
 
 use Xervice\Core\Config\AbstractConfig;
 
-class ServiceConfig extends AbstractClient
+class ServiceConfig extends AbstractConfig
 {
 
 }
