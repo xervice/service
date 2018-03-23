@@ -33,6 +33,7 @@ class ServiceFactory extends AbstractFactory
     public function createApplicationBootstrap()
     {
         return new ApplicationBootstrap(
+            $this->createRouteProvider(),
             $this->createServiceProvider()
         );
     }
