@@ -34,10 +34,13 @@ class ApplicationBootstrap implements ApplicationBootstrapInterface
         $this->serviceProvider = $serviceProvider;
     }
 
-
+    /**
+     * @param \Laravel\Lumen\Application $app
+     */
     public function boot(Application $app): void
     {
-        // TODO: Implement boot() method.
+        $this->serviceProvider->register($app);
+        $this->routeProvider->register($app);
     }
 
 }
