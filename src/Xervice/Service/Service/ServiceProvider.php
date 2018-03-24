@@ -10,14 +10,14 @@ use Laravel\Lumen\Application;
 class ServiceProvider implements ServiceProviderInterface
 {
     /**
-     * @var \Illuminate\Support\ServiceProvider[]
+     * @var ServiceProviderInterface[]
      */
     private $serviceProvider;
 
     /**
      * ServiceProvider constructor.
      *
-     * @param \Illuminate\Support\ServiceProvider[] $serviceProvider
+     * @param ServiceProviderInterface[] $serviceProvider
      */
     public function __construct(array $serviceProvider)
     {
@@ -30,7 +30,7 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         foreach ($this->serviceProvider as $serviceProvider) {
-            $app->register($serviceProvider);
+            $serviceProvider->register($app);
         }
     }
 

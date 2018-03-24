@@ -39,7 +39,7 @@ class ServiceDependencyProvider extends AbstractProvider
     }
 
     /**
-     * @return \Illuminate\Support\ServiceProvider[]
+     * @return \Xervice\Service\Service\ServiceProviderInterface[]
      */
     protected function getApplicationServiceProvider()
     {

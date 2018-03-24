@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb2b262c665a6b28f2825834e9c3fbf7",
+    "content-hash": "82370b83c839e95c2d7446f47240e902",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1435,16 +1435,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.24.2",
+            "version": "1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "bba6c6e410c6b4317e37a9474aeaa753808c3875"
+                "reference": "cbcf13da0b531767e39eb86e9687f5deba9857b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bba6c6e410c6b4317e37a9474aeaa753808c3875",
-                "reference": "bba6c6e410c6b4317e37a9474aeaa753808c3875",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/cbcf13da0b531767e39eb86e9687f5deba9857b4",
+                "reference": "cbcf13da0b531767e39eb86e9687f5deba9857b4",
                 "shasum": ""
             },
             "require": {
@@ -1484,7 +1484,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-03-10T10:10:14+00:00"
+            "time": "2018-03-19T15:50:49+00:00"
         },
         {
             "name": "nette/php-generator",
@@ -2559,16 +2559,16 @@
         },
         {
             "name": "xervice/core",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/core.git",
-                "reference": "0e843c50fe4acf75c0b7105268505d4b9ee6a0f6"
+                "reference": "cbf0f68d5a1b43c9e4ab6dde68579da4082a1746"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/core/zipball/0e843c50fe4acf75c0b7105268505d4b9ee6a0f6",
-                "reference": "0e843c50fe4acf75c0b7105268505d4b9ee6a0f6",
+                "url": "https://api.github.com/repos/xervice/core/zipball/cbf0f68d5a1b43c9e4ab6dde68579da4082a1746",
+                "reference": "cbf0f68d5a1b43c9e4ab6dde68579da4082a1746",
                 "shasum": ""
             },
             "require": {
@@ -2601,20 +2601,20 @@
                 }
             ],
             "description": "Xervice core functionality",
-            "time": "2018-03-19T18:36:38+00:00"
+            "time": "2018-03-24T10:47:46+00:00"
         },
         {
             "name": "xervice/data-provider",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/data-provider.git",
-                "reference": "89ee4afcc4221e9c6347e0805295a815cf152bf7"
+                "reference": "1a840394ca271d943d380b92e19e3803dbb7c886"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/data-provider/zipball/89ee4afcc4221e9c6347e0805295a815cf152bf7",
-                "reference": "89ee4afcc4221e9c6347e0805295a815cf152bf7",
+                "url": "https://api.github.com/repos/xervice/data-provider/zipball/1a840394ca271d943d380b92e19e3803dbb7c886",
+                "reference": "1a840394ca271d943d380b92e19e3803dbb7c886",
                 "shasum": ""
             },
             "require": {
@@ -2648,7 +2648,7 @@
                     "email": "contact@mibexx.de"
                 }
             ],
-            "time": "2018-03-19T18:43:37+00:00"
+            "time": "2018-03-24T09:49:37+00:00"
         }
     ],
     "packages-dev": [
