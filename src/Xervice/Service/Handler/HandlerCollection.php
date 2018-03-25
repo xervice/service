@@ -1,14 +1,15 @@
 <?php
 
 
-namespace Xervice\Service\Middleware\Security\Validator;
+namespace Xervice\Service\Handler;
 
 
+use Xervice\Service\Handler\HandlerInterface;
 
-class ValidatorCollection implements \Iterator, \Countable
+class HandlerCollection implements \Iterator, \Countable
 {
     /**
-     * @var \Xervice\Service\Middleware\Security\Validator\ValidatorInterface[]
+     * @var \Xervice\Service\Handler\HandlerInterface[]
      */
     private $collection;
 
@@ -20,25 +21,25 @@ class ValidatorCollection implements \Iterator, \Countable
     /**
      * Collection constructor.
      *
-     * @param \Xervice\Service\Middleware\Security\Validator\ValidatorInterface[] $collection
+     * @param \Xervice\Service\Handler\HandlerInterface[] $collection
      */
     public function __construct(array $collection)
     {
-        foreach ($collection as $validator) {
-            $this->add($validator);
+        foreach ($collection as $handler) {
+            $this->add($handler);
         }
     }
 
     /**
-     * @param \Xervice\Service\Middleware\Security\Validator\ValidatorInterface $validator
+     * @param \Xervice\Service\Handler\HandlerInterface $handler
      */
-    public function add(ValidatorInterface $validator)
+    public function add(HandlerInterface $handler)
     {
-        $this->collection[] = $validator;
+        $this->collection[] = $handler;
     }
 
     /**
-     * @return \Xervice\Service\Middleware\Security\Validator\ValidatorInterface
+     * @return \Xervice\Service\Handler\HandlerInterface
      */
     public function current()
     {

@@ -4,10 +4,13 @@
 namespace Xervice\Service;
 
 
-use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Factory\AbstractFactory;
 use Xervice\Service\Application\Application;
 use Xervice\Service\Bootstrap\ApplicationBootstrap;
+use Xervice\Service\Handler\HandlerProvider;
+use Xervice\Service\Middleware\Security\Authenticator\BasicAuthAuthenticator;
+use Xervice\Service\Middleware\Security\Validator\StaticValidator;
+use Xervice\Service\Middleware\Security\Validator\ValidatorCollection;
 use Xervice\Service\Route\RouteProvider;
 use Xervice\Service\Service\ServiceProvider;
 
@@ -39,6 +42,41 @@ class ServiceFactory extends AbstractFactory
     }
 
     /**
+     * @return \Xervice\Service\Middleware\Security\Authenticator\BasicAuthAuthenticator
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     */
+    public function createAuthenticator()
+    {
+        return new BasicAuthAuthenticator(
+            $this->createValidatorCollection()
+        );
+    }
+
+    /**
+     * @return \Xervice\Service\Middleware\Security\Validator\ValidatorCollection
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     */
+    public function createValidatorCollection()
+    {
+        return new ValidatorCollection(
+            [
+                $this->createStaticValidator()
+            ]
+        );
+    }
+
+    /**
+     * @return \Xervice\Service\Middleware\Security\Validator\StaticValidator
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     */
+    public function createStaticValidator()
+    {
+        return new StaticValidator(
+            $this->getConfig()->getStaticApiToken()
+        );
+    }
+
+    /**
      * @return \Xervice\Service\Route\RouteProvider
      */
     public function createRouteProvider()
@@ -56,6 +94,24 @@ class ServiceFactory extends AbstractFactory
         return new ServiceProvider(
             $this->getDependency(ServiceDependencyProvider::APP_SERVICE_PROVIDER)
         );
+    }
+
+    /**
+     * @return \Xervice\Service\Handler\HandlerProvider
+     */
+    public function createHandlerProvider()
+    {
+        return new HandlerProvider(
+            $this->getHandlerCollection()
+        );
+    }
+
+    /**
+     * @return \Xervice\Service\Handler\HandlerCollection
+     */
+    public function getHandlerCollection()
+    {
+        return $this->getDependency(ServiceDependencyProvider::APP_HANDLER);
     }
 
     /**

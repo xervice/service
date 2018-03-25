@@ -5,6 +5,7 @@ namespace Xervice\Service\Controller;
 
 
 use Xervice\DataProvider\DataProvider\AbstractDataProvider;
+use Xervice\Service\Application\Response\ApiResponse;
 
 abstract class AbstractApiController extends AbstractController
 {
@@ -15,6 +16,8 @@ abstract class AbstractApiController extends AbstractController
      */
     public function jsonResponse(AbstractDataProvider $dataProvider)
     {
-        return json_encode($dataProvider->toArray());
+        $response = new ApiResponse();
+        $response->setDataProvider($dataProvider);
+        return $response;
     }
 }

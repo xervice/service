@@ -7,6 +7,10 @@ namespace Xervice\Service;
 use Laravel\Lumen\Application;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Dependency\Provider\AbstractProvider;
+use Xervice\Service\Handler\Handler\DebugHandler;
+use Xervice\Service\Handler\Handler\ErrorHandler;
+use Xervice\Service\Handler\Handler\ExceptionHandler;
+use Xervice\Service\Handler\HandlerCollection;
 use Xervice\Service\Route\RouterCollection;
 
 /**
@@ -20,6 +24,8 @@ class ServiceDependencyProvider extends AbstractProvider
 
     const APP_ROUTE_COLLECTION = 'app.route.collection';
 
+    const APP_HANDLER = 'app.handler';
+
     /**
      * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
      */
@@ -28,6 +34,24 @@ class ServiceDependencyProvider extends AbstractProvider
         $this->setApplication($container);
         $this->setApplicationServiceProvider($container);
         $this->setRouteCollection($container);
+
+        $container[self::APP_HANDLER] = function (DependencyProviderInterface $container) {
+            return new HandlerCollection(
+                $this->getHandler()
+            );
+        };
+    }
+
+    /**
+     * @return \Xervice\Service\Handler\HandlerInterface[]
+     */
+    protected function getHandler()
+    {
+        return [
+            new ErrorHandler(),
+            new ExceptionHandler(),
+            new DebugHandler()
+        ];
     }
 
     /**

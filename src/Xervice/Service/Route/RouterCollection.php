@@ -23,7 +23,7 @@ class RouterCollection implements \Iterator, \Countable
      */
     public function __construct(array $collection)
     {
-        foreach ($this->collection as $route) {
+        foreach ($collection as $route) {
             $this->add($route);
         }
     }

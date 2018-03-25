@@ -23,4 +23,14 @@ class ServiceFacade extends AbstractFacade
              ->boot()
              ->run();
     }
+
+    /**
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     */
+    public function registerHandler()
+    {
+        $this->getFactory()->createHandlerProvider()->handle(
+            $this->getConfig()->isDebug()
+        );
+    }
 }
