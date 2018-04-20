@@ -19,6 +19,9 @@ use Xervice\Service\Service\ServiceProvider;
  */
 class ServiceFactory extends AbstractFactory
 {
+    /**
+     * @return \Xervice\Service\Middleware\Security\Response\SecurityUnauthorizedResponseInterface
+     */
     public function createSecurityUnauthorizedResponse()
     {
         return new SecurityUnauthorizedResponse();
