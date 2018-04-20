@@ -10,6 +10,7 @@
         <DataElement name="Status" type="int"/>
         <DataElement name="Exception" type="string"/>
         <DataElement name="Message" type="string"/>
+        <DataElement name="Trace" type="string"/>
     </DataProvider>
 
 </DataProviders>

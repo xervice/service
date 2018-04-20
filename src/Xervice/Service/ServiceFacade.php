@@ -33,4 +33,13 @@ class ServiceFacade extends AbstractFacade
             $this->getConfig()->isDebug()
         );
     }
+
+    /**
+     * @return bool
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     */
+    public function isDebug()
+    {
+        return $this->getConfig()->isDebug();
+    }
 }
