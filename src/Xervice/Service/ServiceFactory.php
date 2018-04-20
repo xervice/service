@@ -56,7 +56,7 @@ class ServiceFactory extends AbstractFactory
     public function createAuthenticator()
     {
         return new BasicAuthAuthenticator(
-            $this->createValidatorCollection()
+            $this->getValidatorCollection()
         );
     }
 
@@ -66,7 +66,7 @@ class ServiceFactory extends AbstractFactory
      */
     public function getValidatorCollection()
     {
-        return $this->getDependency();
+        return $this->getDependency(ServiceDependencyProvider::APP_SECURITY_VALIDATOR_COLLECTION);
     }
 
     /**
