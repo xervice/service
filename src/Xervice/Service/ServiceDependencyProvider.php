@@ -11,6 +11,7 @@ use Xervice\Service\Handler\Handler\ErrorHandler;
 use Xervice\Service\Handler\Handler\ExceptionHandler;
 use Xervice\Service\Handler\HandlerCollection;
 use Xervice\Service\Lumen\ApplicationBridge;
+use Xervice\Service\Middleware\Security\Validator\ValidatorCollection;
 use Xervice\Service\Route\RouterCollection;
 
 /**
@@ -26,6 +27,8 @@ class ServiceDependencyProvider extends AbstractProvider
 
     const APP_HANDLER = 'app.handler';
 
+    const APP_SECURITY_VALIDATOR_COLLECTION = 'app.security.validator.collection';
+
     /**
      * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
      */
@@ -34,12 +37,18 @@ class ServiceDependencyProvider extends AbstractProvider
         $this->setApplication($container);
         $this->setApplicationServiceProvider($container);
         $this->setRouteCollection($container);
+        $this->setSecurityValidatorCollection($container);
+        $this->setHandlerCollection($container);
+    }
 
-        $container[self::APP_HANDLER] = function (DependencyProviderInterface $container) {
-            return new HandlerCollection(
-                $this->getHandler()
-            );
-        };
+    /**
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     *
+     * @return \Xervice\Service\Middleware\Security\Validator\ValidatorInterface[]
+     */
+    protected function getBasicAuthValidator(DependencyProviderInterface $container)
+    {
+        return [];
     }
 
     /**
@@ -98,6 +107,32 @@ class ServiceDependencyProvider extends AbstractProvider
         $container[self::APP_ROUTE_COLLECTION] = function (DependencyProviderInterface $container) {
             return new RouterCollection(
                 $this->getRouteProvider()
+            );
+        };
+    }
+
+    /**
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     *
+     * @return \Xervice\Core\Dependency\DependencyProviderInterface
+     */
+    private function setSecurityValidatorCollection(DependencyProviderInterface $container)
+    {
+        $container[self::APP_SECURITY_VALIDATOR_COLLECTION] = function (DependencyProviderInterface $container) {
+            return new ValidatorCollection(
+                $this->getBasicAuthValidator($container)
+            );
+        };
+    }
+
+    /**
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     */
+    private function setHandlerCollection(DependencyProviderInterface $container): void
+    {
+        $container[self::APP_HANDLER] = function (DependencyProviderInterface $container) {
+            return new HandlerCollection(
+                $this->getHandler()
             );
         };
     }

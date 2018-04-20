@@ -10,8 +10,7 @@ use Xervice\Service\Bootstrap\ApplicationBootstrap;
 use Xervice\Service\Handler\HandlerProvider;
 use Xervice\Service\Lumen\ExceptionHandler\XerviceExceptionHandler;
 use Xervice\Service\Middleware\Security\Authenticator\BasicAuthAuthenticator;
-use Xervice\Service\Middleware\Security\Validator\StaticValidator;
-use Xervice\Service\Middleware\Security\Validator\ValidatorCollection;
+use Xervice\Service\Middleware\Security\Response\SecurityUnauthorizedResponse;
 use Xervice\Service\Route\RouteProvider;
 use Xervice\Service\Service\ServiceProvider;
 
@@ -20,6 +19,11 @@ use Xervice\Service\Service\ServiceProvider;
  */
 class ServiceFactory extends AbstractFactory
 {
+    public function createSecurityUnauthorizedResponse()
+    {
+        return new SecurityUnauthorizedResponse();
+    }
+
     /**
      * @return \Xervice\Service\Application\Application
      */
@@ -57,24 +61,9 @@ class ServiceFactory extends AbstractFactory
      * @return \Xervice\Service\Middleware\Security\Validator\ValidatorCollection
      * @throws \Xervice\Config\Exception\ConfigNotFound
      */
-    public function createValidatorCollection()
+    public function getValidatorCollection()
     {
-        return new ValidatorCollection(
-            [
-                $this->createStaticValidator()
-            ]
-        );
-    }
-
-    /**
-     * @return \Xervice\Service\Middleware\Security\Validator\StaticValidator
-     * @throws \Xervice\Config\Exception\ConfigNotFound
-     */
-    public function createStaticValidator()
-    {
-        return new StaticValidator(
-            $this->getConfig()->getStaticApiToken()
-        );
+        return $this->getDependency();
     }
 
     /**

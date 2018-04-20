@@ -19,19 +19,18 @@ class Authentication extends AbstractMiddleware
      * @param \Illuminate\Http\Request $request
      * @param \Closure $next
      *
-     * @return mixed
+     * @return mixed|\Xervice\Service\Middleware\Security\Response\SecurityUnauthorizedResponse
+     * @throws \Core\Locator\Dynamic\ServiceNotParseable
+     * @throws \Xervice\Config\Exception\ConfigNotFound
      */
     public function handle(Request $request, Closure $next)
     {
         $authenticator = $this->getFactory()->createAuthenticator();
         if (!$authenticator->isAuth($request)) {
-            $response = new ApiResponse();
+            $response = $this->getFactory()->createSecurityUnauthorizedResponse();
+            $response->setSecurityResponse($request);
 
-            $message = new ApiAuthenticationFailedDataProvider();
-            $message->setStatus(403);
-            $message->setMessage('Authentication failed');
-
-            return $response->setDataProvider($message);
+            return $response;
         }
 
         return $next($request);
