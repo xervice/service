@@ -54,12 +54,14 @@ abstract class AbstractApiController extends AbstractController
 
     /**
      * @param \Xervice\DataProvider\DataProvider\AbstractDataProvider $dataProvider
+     * @param int $statusCode
      *
      * @return \Xervice\Service\Application\Response\ApiResponse
      */
-    public function jsonResponse(AbstractDataProvider $dataProvider): ApiResponse
+    public function jsonResponse(AbstractDataProvider $dataProvider, int $statusCode = 200): ApiResponse
     {
         $response = new ApiResponse();
+        $response->setStatusCode($statusCode);
         $response->setDataProvider($dataProvider);
         return $response;
     }
