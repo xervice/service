@@ -32,7 +32,7 @@ class XerviceExceptionHandler extends Handler
 
         $response = new JsonResponse();
         $response->setData($dataProvider->toArray());
-        echo (string)$response;
+        $response->send();
     }
 
 
