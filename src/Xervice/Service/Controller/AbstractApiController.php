@@ -47,11 +47,11 @@ abstract class AbstractApiController extends AbstractController
         $method = $this->dashesToCamelCase($method);
         $execMethod = $method . 'Action';
 
-        if (!method_exists($this, $method)) {
+        if (!method_exists($this, $execMethod)) {
             throw new ApiControllerException('API method not found ' . $method);
         }
 
-        return $this->$method($this->dataProvider);
+        return $this->$execMethod($this->dataProvider);
     }
 
     /**
