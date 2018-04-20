@@ -26,11 +26,17 @@ class XerviceExceptionHandler extends Handler
     public function render($request, Exception $e)
     {
         $dataProvider = new ApiExceptionDataProvider();
-        $dataProvider->setStatus(500)
+        $dataProvider->setStatus($e->getCode())
             ->setException(get_class($e))
             ->setMessage($e->getMessage());
 
         $response = new JsonResponse();
+        if (method_exists($e, 'getStatusCode')) {
+            $response->setStatusCode($e->getStatusCode());
+        } else {
+            $response->setStatusCode(500);
+        }
+
         $response->setData($dataProvider->toArray());
         $response->send();
     }
