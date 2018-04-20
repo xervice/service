@@ -7,57 +7,49 @@ namespace Xervice\Service\Controller;
 use Illuminate\Http\Request;
 use Xervice\DataProvider\DataProvider\AbstractDataProvider;
 use Xervice\Service\Application\Response\ApiResponse;
+use Xervice\Service\Controller\Exception\ApiControllerException;
 
 abstract class AbstractApiController extends AbstractController
 {
-    /**
-     * @var Request
-     */
-    private $request;
-
     /**
      * @var \Xervice\DataProvider\DataProvider\AbstractDataProvider
      */
     private $dataProvider;
 
     /**
-     * AbstractApiController constructor.
-     *
-     * @param \Illuminate\Http\Request $request
+     * @var \Illuminate\Http\Request
      */
-    public function __construct(Request $request)
+    private $request;
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param string $method
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Xervice\Service\Controller\Exception\ApiControllerException
+     */
+    public function apiAction(Request $request, string $method)
     {
         $this->request = $request;
-    }
 
-    /**
-     * @param string $name
-     * @param array $arguments
-     *
-     * @return mixed
-     */
-    public function __call($name, $arguments)
-    {
-        $jsonBody = $this->request->getContent();
+        $jsonBody = $request->getContent();
         $data = json_decode($jsonBody, true);
 
-        if ($data && isset($data['class']) && isset($data['data'])) {
-            $class = $data['class'];
-            $this->dataProvider = new $class();
-            $this->dataProvider->fromArray($data['data']);
+        if (!$data || !isset($data['class']) || !isset($data['data'])) {
+            throw new ApiControllerException('Request body is no valid json' . PHP_EOL . $jsonBody);
         }
 
-        $method = str_replace('Action', '', $name);
+        $class = $data['class'];
+        $this->dataProvider = new $class();
+        $this->dataProvider->fromArray($data['data']);
 
-        $this->$method($this->dataProvider);
-    }
+        $method .= 'Action';
 
-    /**
-     * @return Request
-     */
-    public function getRequest(): Request
-    {
-        return $this->request;
+        if (!method_exists($this, $method)) {
+            throw new ApiControllerException('API method not found ' . $method);
+        }
+
+        return $this->$method($this->dataProvider);
     }
 
     /**
