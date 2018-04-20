@@ -43,7 +43,9 @@ abstract class AbstractApiController extends AbstractController
         $this->dataProvider = new $class();
         $this->dataProvider->fromArray($data['data']);
 
-        $method .= 'Action';
+
+        $method = $this->dashesToCamelCase($method);
+        $execMethod = $method . 'Action';
 
         if (!method_exists($this, $method)) {
             throw new ApiControllerException('API method not found ' . $method);
@@ -64,5 +66,22 @@ abstract class AbstractApiController extends AbstractController
         $response->setStatusCode($statusCode);
         $response->setDataProvider($dataProvider);
         return $response;
+    }
+
+    /**
+     * @param $string
+     * @param bool $capitalizeFirstCharacter
+     *
+     * @return mixed
+     */
+    private function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
+    {
+        $str = str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
+
+        if (!$capitalizeFirstCharacter) {
+            $str[0] = strtolower($str[0]);
+        }
+
+        return $str;
     }
 }
