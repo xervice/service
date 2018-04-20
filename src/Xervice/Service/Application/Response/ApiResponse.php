@@ -16,7 +16,12 @@ class ApiResponse extends JsonResponse
      */
     public function setDataProvider(AbstractDataProvider $dataProvider)
     {
-        $this->setData($dataProvider->toArray());
+        $this->setData(
+            [
+                'class' => get_class($dataProvider),
+                'data'  => $dataProvider->toArray()
+            ]
+        );
         if (method_exists($dataProvider, 'getStatus')) {
             $this->setStatusCode($dataProvider->getStatus());
         }

@@ -25,7 +25,7 @@ abstract class AbstractApiController extends AbstractController
      * @param \Illuminate\Http\Request $request
      * @param string $method
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Xervice\Service\Application\Response\ApiResponse
      * @throws \Xervice\Service\Controller\Exception\ApiControllerException
      */
     public function apiAction(Request $request, string $method)
@@ -55,9 +55,9 @@ abstract class AbstractApiController extends AbstractController
     /**
      * @param \Xervice\DataProvider\DataProvider\AbstractDataProvider $dataProvider
      *
-     * @return string
+     * @return \Xervice\Service\Application\Response\ApiResponse
      */
-    public function jsonResponse(AbstractDataProvider $dataProvider)
+    public function jsonResponse(AbstractDataProvider $dataProvider): ApiResponse
     {
         $response = new ApiResponse();
         $response->setDataProvider($dataProvider);
