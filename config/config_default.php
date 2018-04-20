@@ -9,8 +9,11 @@ $config[DataProviderConfig::DATA_PROVIDER_PATHS] = [
 
 $config[DataProviderConfig::DATA_PROVIDER_GENERATED_PATH] = __DIR__ . '/../src/Generated';
 
-$config[ServiceConfig::DEBUG_ACTIVE] = true;
 
-$config[ServiceConfig::STATIC_API_TOKEN_LIST] = [
-    'test:test123'
-];
+if (class_exists(ServiceConfig::class)) {
+    $config[ServiceConfig::DEBUG_ACTIVE] = true;
+
+    $config[ServiceConfig::STATIC_API_TOKEN_LIST] = [
+        'test:test123'
+    ];
+}

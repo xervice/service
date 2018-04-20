@@ -5,14 +5,19 @@ namespace Xervice\Service\Lumen;
 
 
 use Laravel\Lumen\Application;
+use Xervice\Core\Locator\Dynamic\DynamicLocator;
+use Xervice\Service\Lumen\ExceptionHandler\XerviceExceptionHandler;
 
 class ApplicationBridge extends Application
 {
-    /**
-     * Overwrite default error handler from laravel
-     */
-    protected function registerErrorHandling()
-    {
+    use DynamicLocator;
 
+    /**
+     * @return mixed
+     */
+    protected function resolveExceptionHandler()
+    {
+        return $this->getFactory()->createXerviceExceptionHandler();
     }
+
 }

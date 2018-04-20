@@ -8,6 +8,7 @@ use Xervice\Core\Factory\AbstractFactory;
 use Xervice\Service\Application\Application;
 use Xervice\Service\Bootstrap\ApplicationBootstrap;
 use Xervice\Service\Handler\HandlerProvider;
+use Xervice\Service\Lumen\ExceptionHandler\XerviceExceptionHandler;
 use Xervice\Service\Middleware\Security\Authenticator\BasicAuthAuthenticator;
 use Xervice\Service\Middleware\Security\Validator\StaticValidator;
 use Xervice\Service\Middleware\Security\Validator\ValidatorCollection;
@@ -94,6 +95,14 @@ class ServiceFactory extends AbstractFactory
         return new ServiceProvider(
             $this->getDependency(ServiceDependencyProvider::APP_SERVICE_PROVIDER)
         );
+    }
+
+    /**
+     * @return \Xervice\Service\Lumen\ExceptionHandler\XerviceExceptionHandler
+     */
+    public function createXerviceExceptionHandler()
+    {
+        return new XerviceExceptionHandler();
     }
 
     /**
