@@ -4,13 +4,13 @@
 namespace Xervice\Service;
 
 
-use Laravel\Lumen\Application;
 use Xervice\Core\Dependency\DependencyProviderInterface;
 use Xervice\Core\Dependency\Provider\AbstractProvider;
 use Xervice\Service\Handler\Handler\DebugHandler;
 use Xervice\Service\Handler\Handler\ErrorHandler;
 use Xervice\Service\Handler\Handler\ExceptionHandler;
 use Xervice\Service\Handler\HandlerCollection;
+use Xervice\Service\Lumen\ApplicationBridge;
 use Xervice\Service\Route\RouterCollection;
 
 /**
@@ -76,7 +76,7 @@ class ServiceDependencyProvider extends AbstractProvider
     private function setApplication(DependencyProviderInterface $container): void
     {
         $container[self::APPLICATION] = function (DependencyProviderInterface $container) {
-            return new Application();
+            return new ApplicationBridge();
         };
     }
 
