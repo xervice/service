@@ -24,11 +24,12 @@ abstract class AbstractApiController extends AbstractController
     /**
      * @param \Illuminate\Http\Request $request
      * @param string $method
+     * @param mixed ...$params
      *
-     * @return \Xervice\Service\Application\Response\ApiResponse
+     * @return mixed
      * @throws \Xervice\Service\Controller\Exception\ApiControllerException
      */
-    public function apiAction(Request $request, string $method)
+    public function apiAction(Request $request, string $method, ...$params)
     {
         $this->request = $request;
 
@@ -51,7 +52,13 @@ abstract class AbstractApiController extends AbstractController
             throw new ApiControllerException('API method not found ' . $method);
         }
 
-        return $this->$execMethod($this->dataProvider);
+        if (\count($params) > 0) {
+            $result = $this->$execMethod($this->dataProvider, ...$params);
+        } else {
+            $result = $this->$execMethod($this->dataProvider);
+        }
+
+        return $result;
     }
 
     /**
