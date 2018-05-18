@@ -16,8 +16,8 @@ class SecurityUnauthorizedResponse extends ApiResponse implements SecurityUnauth
     public function setSecurityResponse(Request $request)
     {
         $message = new ApiAuthenticationFailedDataProvider();
-        $message->setStatus(403);
-        $message->setMessage('Authentication failed');
+        $message->setStatus(401);
+        $message->setMessage('Unauthorized');
 
         $this->setDataProvider($message);
     }
