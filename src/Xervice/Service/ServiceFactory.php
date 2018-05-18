@@ -24,7 +24,7 @@ class ServiceFactory extends AbstractFactory
      */
     public function createSecurityUnauthorizedResponse()
     {
-        return new SecurityUnauthorizedResponse();
+        return new SecurityUnauthorizedResponse(null, 403);
     }
 
     /**
