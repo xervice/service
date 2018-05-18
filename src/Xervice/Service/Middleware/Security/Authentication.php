@@ -30,7 +30,10 @@ class Authentication extends AbstractMiddleware
             $response = $this->getFactory()->createSecurityUnauthorizedResponse();
             $response->setSecurityResponse($request);
 
-            return $response;
+            return response()->json(
+                $response->getData(),
+                401
+            );
         }
 
         return $next($request);
