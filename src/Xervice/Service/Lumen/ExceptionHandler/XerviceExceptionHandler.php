@@ -8,6 +8,7 @@ namespace Xervice\Service\Lumen\ExceptionHandler;
 use DataProvider\ApiExceptionDataProvider;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Laravel\Lumen\Exceptions\Handler;
 use Xervice\Core\Exception\XerviceException;
 use Xervice\Core\Locator\Dynamic\DynamicLocator;
@@ -25,10 +26,10 @@ class XerviceExceptionHandler extends Handler
      * @param \Illuminate\Http\Request $request
      * @param \Exception $e
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
-    public function render($request, Exception $e): void
+    public function render($request, Exception $e): Response
     {
         $dataProvider = new ApiExceptionDataProvider();
         $dataProvider->setStatus($e->getCode())
@@ -47,7 +48,8 @@ class XerviceExceptionHandler extends Handler
         }
 
         $response->setData($dataProvider->toArray());
-        $response->send();
+
+        return $response;
     }
 
 
