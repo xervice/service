@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Service\Service\Provider;
@@ -18,7 +19,7 @@ class ApiSecurityProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app->middleware(Authentication::class);
+        return $app->middleware(Authentication::class);
     }
 
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Service\Lumen\ExceptionHandler;
@@ -24,9 +25,10 @@ class XerviceExceptionHandler extends Handler
      * @param \Illuminate\Http\Request $request
      * @param \Exception $e
      *
-     * @return \Illuminate\Http\Response
+     * @return void
+     * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $e): void
     {
         $dataProvider = new ApiExceptionDataProvider();
         $dataProvider->setStatus($e->getCode())

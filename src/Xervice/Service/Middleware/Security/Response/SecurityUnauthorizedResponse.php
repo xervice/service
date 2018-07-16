@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Service\Middleware\Security\Response;
@@ -13,7 +14,7 @@ class SecurityUnauthorizedResponse extends ApiResponse implements SecurityUnauth
     /**
      * @param \Illuminate\Http\Request $request
      */
-    public function setSecurityResponse(Request $request)
+    public function setSecurityResponse(Request $request): void
     {
         $message = new ApiAuthenticationFailedDataProvider();
         $message->setStatus(401);

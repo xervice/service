@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Service;
@@ -19,34 +20,34 @@ use Xervice\Service\Route\RouterCollection;
  */
 class ServiceDependencyProvider extends AbstractProvider
 {
-    const APPLICATION = 'application';
+    public const APPLICATION = 'application';
 
-    const APP_SERVICE_PROVIDER = 'app.service.provider';
+    public const APP_SERVICE_PROVIDER = 'app.service.provider';
 
-    const APP_ROUTE_COLLECTION = 'app.route.collection';
+    public const APP_ROUTE_COLLECTION = 'app.route.collection';
 
-    const APP_HANDLER = 'app.handler';
+    public const APP_HANDLER = 'app.handler';
 
-    const APP_SECURITY_VALIDATOR_COLLECTION = 'app.security.validator.collection';
+    public const APP_SECURITY_VALIDATOR_COLLECTION = 'app.security.validator.collection';
 
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      */
-    public function handleDependencies(DependencyProviderInterface $container)
+    public function handleDependencies(DependencyProviderInterface $dependencyProvider): void
     {
-        $this->setApplication($container);
-        $this->setApplicationServiceProvider($container);
-        $this->setRouteCollection($container);
-        $this->setSecurityValidatorCollection($container);
-        $this->setHandlerCollection($container);
+        $this->setApplication($dependencyProvider);
+        $this->setApplicationServiceProvider($dependencyProvider);
+        $this->setRouteCollection($dependencyProvider);
+        $this->setSecurityValidatorCollection($dependencyProvider);
+        $this->setHandlerCollection($dependencyProvider);
     }
 
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      *
      * @return \Xervice\Service\Middleware\Security\Validator\ValidatorInterface[]
      */
-    protected function getBasicAuthValidator(DependencyProviderInterface $container)
+    protected function getBasicAuthValidator(DependencyProviderInterface $dependencyProvider)
     {
         return [];
     }
@@ -80,31 +81,31 @@ class ServiceDependencyProvider extends AbstractProvider
     }
 
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      */
-    private function setApplication(DependencyProviderInterface $container): void
+    private function setApplication(DependencyProviderInterface $dependencyProvider): void
     {
-        $container[self::APPLICATION] = function (DependencyProviderInterface $container) {
+        $dependencyProvider[self::APPLICATION] = function (DependencyProviderInterface $dependencyProvider) {
             return new ApplicationBridge();
         };
     }
 
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      */
-    private function setApplicationServiceProvider(DependencyProviderInterface $container): void
+    private function setApplicationServiceProvider(DependencyProviderInterface $dependencyProvider): void
     {
-        $container[self::APP_SERVICE_PROVIDER] = function (DependencyProviderInterface $container) {
+        $dependencyProvider[self::APP_SERVICE_PROVIDER] = function (DependencyProviderInterface $dependencyProvider) {
             return $this->getApplicationServiceProvider();
         };
     }
 
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      */
-    private function setRouteCollection(DependencyProviderInterface $container): void
+    private function setRouteCollection(DependencyProviderInterface $dependencyProvider): void
     {
-        $container[self::APP_ROUTE_COLLECTION] = function (DependencyProviderInterface $container) {
+        $dependencyProvider[self::APP_ROUTE_COLLECTION] = function (DependencyProviderInterface $dependencyProvider) {
             return new RouterCollection(
                 $this->getRouteProvider()
             );
@@ -112,25 +113,25 @@ class ServiceDependencyProvider extends AbstractProvider
     }
 
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      *
      * @return \Xervice\Core\Dependency\DependencyProviderInterface
      */
-    private function setSecurityValidatorCollection(DependencyProviderInterface $container)
+    private function setSecurityValidatorCollection(DependencyProviderInterface $dependencyProvider)
     {
-        $container[self::APP_SECURITY_VALIDATOR_COLLECTION] = function (DependencyProviderInterface $container) {
+        $dependencyProvider[self::APP_SECURITY_VALIDATOR_COLLECTION] = function (DependencyProviderInterface $dependencyProvider) {
             return new ValidatorCollection(
-                $this->getBasicAuthValidator($container)
+                $this->getBasicAuthValidator($dependencyProvider)
             );
         };
     }
 
     /**
-     * @param \Xervice\Core\Dependency\DependencyProviderInterface $container
+     * @param \Xervice\Core\Dependency\DependencyProviderInterface $dependencyProvider
      */
-    private function setHandlerCollection(DependencyProviderInterface $container): void
+    private function setHandlerCollection(DependencyProviderInterface $dependencyProvider): void
     {
-        $container[self::APP_HANDLER] = function (DependencyProviderInterface $container) {
+        $dependencyProvider[self::APP_HANDLER] = function (DependencyProviderInterface $dependencyProvider) {
             return new HandlerCollection(
                 $this->getHandler()
             );

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\Service;
@@ -25,7 +26,6 @@ class ServiceFacade extends AbstractFacade
     }
 
     /**
-     * @throws \Xervice\Config\Exception\ConfigNotFound
      */
     public function registerHandler()
     {
@@ -36,7 +36,6 @@ class ServiceFacade extends AbstractFacade
 
     /**
      * @return bool
-     * @throws \Xervice\Config\Exception\ConfigNotFound
      */
     public function isDebug()
     {
